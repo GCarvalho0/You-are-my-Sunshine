@@ -21,6 +21,7 @@ d2.font = Font(name="Calibri", size=48, b="true")
 d2.fill = PatternFill("solid", fgColor="fffffccc")
 d2.border = Border(top=medium, left=medium, right=medium)
 
+print("as")
 #nº de dias da semana
 WS['D4'] = "=DAY(A1)"
 WS['E4'] = "=D4+1"

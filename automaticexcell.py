@@ -29,7 +29,6 @@ d2.border = Border(top=medium, left=medium, right=medium)
 print("as")
 
 #nº de dias da semana
-
 WS['E4'] = "=D4+1"
 WS['F4'] = "=E4+1"
 WS['G4'] = "=F4+1"
@@ -101,21 +100,18 @@ WS['AJ3'] = '=TEXT(A1 + 4, "ddd")'
 WS['AK3'] = '=TEXT(A1 + 5, "ddd")'
 WS['AL3'] = '=TEXT(A1 + 6, "ddd")'
 
-<<<<<<< HEAD
-#total manha
-WS['C5'] = "Total Manhã"
-WS['C5'].fill = PatternFill("solid", fgColor="a0fc9c")
-WS['C5'].font = Font(name="Calibri", b="true", size=18)
-WS['C5'].alignment = Alignment(horizontal="right", vertical="center")
-WS['C5'].border = Border(top=medium, right=medium)
-=======
 # for row in WS.iter_rows(min_row=3, max_row=3, min_col=4, max_col=33):
 #     for cell in row:
 #         if cell.value == 'Sat':
 #             cell.fill = PatternFill("solid", fgColor="fffffccc")
 #             print("goncalo")
 
->>>>>>> pr/4
+#total manha
+WS['C5'] = "Total Manhã"
+WS['C5'].fill = PatternFill("solid", fgColor="a0fc9c")
+WS['C5'].font = Font(name="Calibri", b="true", size=18)
+WS['C5'].alignment = Alignment(horizontal="right", vertical="center")
+WS['C5'].border = Border(top=medium, right=medium)
 
 WS['D5'] = '0'
 WS['D5'].fill = PatternFill("solid", fgColor="a0fc9c")
@@ -123,7 +119,6 @@ WS['D5'].font = Font(name="Calibri", b="true", size=18)
 WS['D5'].alignment = Alignment(horizontal="center", vertical="center")
 WS['D5'].border = Border(top=medium, bottom=medium)
 
-<<<<<<< HEAD
 WS['E5'] = '0'
 WS['E5'].fill = PatternFill("solid", fgColor="a0fc9c")
 WS['E5'].font = Font(name="Calibri", b="true", size=18)
@@ -692,7 +687,3 @@ WS['AH7'].border = Border(top=medium, bottom=dotted, right=medium, left=dotted)
 
 wb.save(r"C:\Users\Alunos\Downloads\yha.xlsx")
 #wb.save(r"C:\Users\Urubu\OneDrive\Documentos\GitHub\You-are-my-Sunshine\yha.xlsx")
-=======
-# wb.save(r"C:\Users\Alunos\Downloads\yha.xlsx")
-# wb.save(r"C:\Users\Urubu\OneDrive\Documentos\GitHub\You-are-my-Sunshine\yha.xlsx")
->>>>>>> pr/4

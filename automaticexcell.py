@@ -1,6 +1,7 @@
 from openpyxl import Workbook,load_workbook
 from openpyxl.utils import get_column_letter
 from openpyxl.styles import Font, Border, Side, PatternFill, GradientFill, Alignment
+import calendar
 import time as _time
 import math as _math
 import sys
@@ -14,8 +15,59 @@ WS.column_dimensions['C'].width = 25
 medium = Side(border_style="medium")
 dotted = Side(border_style="dotted")
 
-# class datetime.date(mounth)
-# WS['D4'] = "01/042024,04,01"
+# Mapeamento dos dias da semana em inglês para português de Portugal
+dias_semana_pt = {
+    'Mon': 'Seg',
+    'Tue': 'Ter',
+    'Wed': 'Qua',
+    'Thu': 'Qui',
+    'Fri': 'Sex',
+    'Sat': 'Sáb',
+    'Sun': 'Dom'
+}
+
+# Carregar o workbook existente
+wb = load_workbook(r"C:\Users\Alunos\Downloads\yha2.xlsx")
+WS = wb.active
+WS.column_dimensions['C'].width = 25
+medium = Side(border_style="medium")
+dotted = Side(border_style="dotted")
+
+# Definir cores para sábado e domingo
+saturday_fill = PatternFill("solid", fgColor="FFFF00")  # Amarelo
+sunday_fill = PatternFill("solid", fgColor="FF0000")    # Vermelho
+
+# Definir o mês e o ano
+ano = 2024
+mes = 5
+
+# Obter o número de dias no mês
+num_dias = calendar.monthrange(ano, mes)[1]
+
+# Obter o nome do mês
+nome_mes = calendar.month_name[mes]
+
+# Definir datas iniciais
+start_date = f"{ano}-{mes}-01"
+
+# Percorrer os dias do mês
+for col in range(4, num_dias + 4):
+    current_date = start_date.split("-")[-1]
+    # Obter o dia da semana em inglês
+    dia_semana_en = calendar.day_abbr[calendar.weekday(ano, mes, int(current_date))]
+    # Traduzir para português de Portugal
+    dia_semana_pt = dias_semana_pt[dia_semana_en]
+    
+    if dia_semana_en == 'Sat':  # Sábado
+        WS[get_column_letter(col) + '3'].fill = saturday_fill
+        WS[get_column_letter(col) + '4'].fill = saturday_fill
+    elif dia_semana_en == 'Sun':  # Domingo
+        WS[get_column_letter(col) + '3'].fill = sunday_fill
+        WS[get_column_letter(col) + '4'].fill = sunday_fill
+
+    WS[get_column_letter(col) + '3'] = dia_semana_pt
+    WS[get_column_letter(col) + '4'] = current_date
+    start_date = f"{ano}-{mes}-{int(current_date) + 1}"
 
 #mês
 WS.merge_cells('D2:AG2')
@@ -25,86 +77,6 @@ d2.alignment = Alignment(horizontal="center", vertical="center")
 d2.font = Font(name="Calibri", size=48, b="true")
 d2.fill = PatternFill("solid", fgColor="fffffccc")
 d2.border = Border(top=medium, left=medium, right=medium)
-
-print("as")
-
-#nº de dias da semana
-WS['E4'] = "=D4+1"
-WS['F4'] = "=E4+1"
-WS['G4'] = "=F4+1"
-WS['H4'] = "=G4+1"
-WS['I4'] = "=H4+1"
-WS['J4'] = "=I4+1"
-WS['K4'] = "=J4+1"
-WS['L4'] = "=K4+1"
-WS['M4'] = "=L4+1"
-WS['N4'] = "=M4+1"
-WS['O4'] = "=N4+1"
-WS['P4'] = "=O4+1"
-WS['Q4'] = "=P4+1"
-WS['R4'] = "=Q4+1"
-WS['S4'] = "=R4+1"
-WS['T4'] = "=S4+1"
-WS['U4'] = "=T4+1"
-WS['V4'] = "=U4+1"
-WS['W4'] = "=V4+1"
-WS['X4'] = "=W4+1"
-WS['Y4'] = "=X4+1"
-WS['Z4'] = "=Y4+1"
-WS['AA4'] = "=Z4+1"
-WS['AB4'] = "=AA4+1"
-WS['AC4'] = "=AB4+1"
-WS['AD4'] = "=AC4+1"    
-WS['AE4'] = "=AD4+1"
-WS['AF4'] = "=AE4+1"
-WS['AG4'] = "=AF4+1"
-
-#dias da semana
-WS['D3'] = '=TEXT(A1, "ddd")'
-WS['E3'] = '=TEXT(A1 + 1, "ddd")'
-WS['F3'] = '=TEXT(A1 + 2, "ddd")'
-WS['G3'] = '=TEXT(A1 + 3, "ddd")'
-WS['H3'] = '=TEXT(A1 + 4, "ddd")'
-WS['I3'] = '=TEXT(A1 + 5, "ddd")'
-WS['J3'] = '=TEXT(A1 + 6, "ddd")'
-
-WS['K3'] = '=TEXT(A1, "ddd")'
-WS['L3'] = '=TEXT(A1 + 1, "ddd")'
-WS['M3'] = '=TEXT(A1 + 2, "ddd")'
-WS['N3'] = '=TEXT(A1 + 3, "ddd")'
-WS['O3'] = '=TEXT(A1 + 4, "ddd")'
-WS['P3'] = '=TEXT(A1 + 5, "ddd")'
-WS['Q3'] = '=TEXT(A1 + 6, "ddd")'
-
-WS['R3'] = '=TEXT(A1, "ddd")'
-WS['S3'] = '=TEXT(A1 + 1, "ddd")'
-WS['T3'] = '=TEXT(A1 + 2, "ddd")'
-WS['U3'] = '=TEXT(A1 + 3, "ddd")'
-WS['V3'] = '=TEXT(A1 + 4, "ddd")'
-WS['W3'] = '=TEXT(A1 + 5, "ddd")'
-WS['X3'] = '=TEXT(A1 + 6, "ddd")'
-
-WS['Y3'] = '=TEXT(A1, "ddd")'
-WS['Z3'] = '=TEXT(A1 + 1, "ddd")'
-WS['AA3'] = '=TEXT(A1 + 2, "ddd")'
-WS['AB3'] = '=TEXT(A1 + 3, "ddd")'
-WS['AC3'] = '=TEXT(A1 + 4, "ddd")'
-WS['AD3'] = '=TEXT(A1 + 5, "ddd")'
-WS['AE3'] = '=TEXT(A1 + 6, "ddd")'
-
-WS['AF3'] = '=TEXT(A1, "ddd")'
-WS['AG3'] = '=TEXT(A1 + 1, "ddd")'
-WS['AH3'] = '=TEXT(A1 + 2, "ddd")'
-WS['AI3'] = '=TEXT(A1 + 3, "ddd")'
-WS['AJ3'] = '=TEXT(A1 + 4, "ddd")'
-WS['AK3'] = '=TEXT(A1 + 5, "ddd")'
-WS['AL3'] = '=TEXT(A1 + 6, "ddd")'
-
-# for row in WS.iter_rows(min_row=3, max_row=3, min_col=4, max_col=33):
-#     for cell in row:
-#         if cell.value == 'Sat':
-#             cell.fill = PatternFill("solid", fgColor="fffffccc")
-#             print("goncalo")
 
 #total manha
 WS['C5'] = "Total Manhã"

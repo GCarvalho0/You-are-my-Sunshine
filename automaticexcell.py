@@ -11,10 +11,93 @@ import sys
 #wb = load_workbook(r"C:\Users\Urubu\OneDrive\Documentos\GitHub\You-are-my-Sunshine\yha.xlsx")
 wb = load_workbook(r"C:\Users\Alunos\Downloads\yha.xlsx")
 WS = wb.active
-WS.column_dimensions['C'].width = 25
-#WS.row_dimensions[8].height = 20
+WS.column_dimensions['C'].width = 35
+WS.row_dimensions[8].height = 5
+WS.row_dimensions[17].height = 5
+linhazul_fill = PatternFill("solid", fgColor="041468")
 medium = Side(border_style="medium")
 dotted = Side(border_style="dotted")
+thin = Side(border_style="thin")
+WS['C8'].fill = linhazul_fill
+WS['C17'].fill = linhazul_fill
+
+#escritorio nomes
+WS['C9'] = 'José António'
+WS['C9'].font = Font(name="Calibri", b="true", size=18)
+WS['C9'].alignment = Alignment(horizontal="right", vertical="center")
+WS['C9'].border = Border(bottom=dotted)
+
+WS['C10'] = 'Henrique Leal'
+WS['C10'].font = Font(name="Calibri", b="true", size=18)
+WS['C10'].alignment = Alignment(horizontal="right", vertical="center")
+WS['C10'].border = Border(bottom=dotted)
+
+WS['C11'] = 'Isabel Bastos'
+WS['C11'].font = Font(name="Calibri", b="true", size=18)
+WS['C11'].alignment = Alignment(horizontal="right", vertical="center")
+WS['C11'].border = Border(bottom=dotted)
+
+WS['C12'] = 'Tetiana Kalichenko'
+WS['C12'].font = Font(name="Calibri", b="true", size=18)
+WS['C12'].alignment = Alignment(horizontal="right", vertical="center")
+WS['C12'].border = Border(bottom=dotted)
+
+WS['C13'] = 'Helena Duarte'
+WS['C13'].font = Font(name="Calibri", b="true", size=18)
+WS['C13'].alignment = Alignment(horizontal="right", vertical="center")
+WS['C13'].border = Border(bottom=dotted)
+
+WS['C14'] = 'Andreia Pinto'
+WS['C14'].font = Font(name="Calibri", b="true", size=18)
+WS['C14'].alignment = Alignment(horizontal="right", vertical="center")
+WS['C14'].border = Border(bottom=dotted)
+
+WS['C15'] = 'André Pais Vieira'
+WS['C15'].font = Font(name="Calibri", b="true", size=18)
+WS['C15'].alignment = Alignment(horizontal="right", vertical="center")
+WS['C15'].border = Border(bottom=dotted)
+
+WS['C16'] = 'Rayanne dos Santos'
+WS['C16'].font = Font(name="Calibri", b="true", size=18)
+WS['C16'].alignment = Alignment(horizontal="right", vertical="center")
+WS['C16'].border = Border(bottom=dotted)
+
+#qualidade manha
+WS['C18'] = 'Fábio Pereira'
+WS['C18'].font = Font(name="Calibri", b="true", size=18)
+WS['C18'].alignment = Alignment(horizontal="right", vertical="center")
+WS['C18'].border = Border(bottom=dotted)
+WS['C18'].fill = PatternFill("solid", fgColor="e8bcb4")
+
+WS['C19'] = 'Miguel Pires'
+WS['C19'].font = Font(name="Calibri", b="true", size=18)
+WS['C19'].alignment = Alignment(horizontal="right", vertical="center")
+WS['C19'].border = Border(bottom=dotted)
+WS['C19'].fill = PatternFill("solid", fgColor="e8bcb4")
+
+WS['C20'] = 'Cristina Tavares'
+WS['C20'].font = Font(name="Calibri", b="true", size=18)
+WS['C20'].alignment = Alignment(horizontal="right", vertical="center")
+WS['C20'].border = Border(bottom=dotted)
+WS['C20'].fill = PatternFill("solid", fgColor="e8bcb4")
+
+WS['C21'] = 'Bianca Gonçalves'
+WS['C21'].font = Font(name="Calibri", b="true", size=18)
+WS['C21'].alignment = Alignment(horizontal="right", vertical="center")
+WS['C21'].border = Border(bottom=dotted)
+WS['C21'].fill = PatternFill("solid", fgColor="e8bcb4")
+
+WS['C22'] = 'Liudmyla Murmryk'
+WS['C22'].font = Font(name="Calibri", b="true", size=18)
+WS['C22'].alignment = Alignment(horizontal="right", vertical="center")
+WS['C22'].border = Border(bottom=dotted)
+WS['C22'].fill = PatternFill("solid", fgColor="e8bcb4")
+
+WS['C23'] = 'Vânia Correia'
+WS['C23'].font = Font(name="Calibri", b="true", size=18)
+WS['C23'].alignment = Alignment(horizontal="right", vertical="center")
+WS['C23'].border = Border(bottom=dotted)
+WS['C23'].fill = PatternFill("solid", fgColor="e8bcb4")
 
 # Mapeamento dos dias da semana em inglês para português de Portugal
 dias_semana_pt = {
@@ -33,7 +116,7 @@ fimdesemana_fill = PatternFill("solid", fgColor="fffffccc")
 
 # Definir o mês e o ano
 ano = 2024
-mes = 4
+mes = 5
 
 # Obter o número de dias no mês
 num_dias = calendar.monthrange(ano, mes)[1]
@@ -42,6 +125,9 @@ num_dias = calendar.monthrange(ano, mes)[1]
 start_date = f"{ano}-{mes}-01"
 
 num_pessoas_escritorio = 8
+num_pessoas_qualidade = 6
+
+folga_fill = PatternFill("solid", fgColor="ff9ccc")
 
 # Percorrer os dias do mês
 for col in range(4, num_dias + 4):
@@ -58,13 +144,68 @@ for col in range(4, num_dias + 4):
         WS[get_column_letter(col) + '3'].fill = fimdesemana_fill
         WS[get_column_letter(col) + '4'].fill = fimdesemana_fill
 
+    #escritorio
     for lin in range(9, num_pessoas_escritorio + 9):
+        WS.row_dimensions[lin].height = 25
+        WS[get_column_letter(col) + str(lin)].alignment = Alignment(horizontal="center", vertical="center")
+        WS[get_column_letter(col) + str(lin)].font = Font(name="Calibri", size=18)
+        WS[get_column_letter(col) + str(lin)].border = Border(top=dotted, right=dotted, left=dotted, bottom=dotted)
         if dia_semana_en == 'Sat':  # Sábado
             WS[get_column_letter(col) + str(lin)] = 'D'
+            WS[get_column_letter(col) + str(lin)].fill = folga_fill
         elif dia_semana_en == 'Sun':  # Domingo
             WS[get_column_letter(col) + str(lin)] = 'D'
+            WS[get_column_letter(col) + str(lin)].fill = folga_fill
         elif dia_semana_en == 'Mon' or 'Tue' or 'Wed' or 'Thu' or 'Fri':
             WS[get_column_letter(col) + str(lin)] = 'E'
+        
+        if lin == 9:
+            WS[get_column_letter(col) + str(lin)].border = Border(top=medium, right=dotted, left=dotted, bottom=dotted)
+
+        if col == 4:
+            WS[get_column_letter(col) + str(lin)].border = Border(top=dotted, right=dotted, left=medium, bottom=dotted)
+            WS[get_column_letter(col) + '9'].border = Border(top=medium, right=dotted, left=medium, bottom=dotted)
+        elif col == 33:
+            WS[get_column_letter(col) + str(lin)].border = Border(top=dotted, right=medium, left=dotted, bottom=dotted)
+            WS[get_column_letter(col) + '9'].border = Border(top=medium, right=medium, left=dotted, bottom=dotted)
+        elif col == 34:
+            WS[get_column_letter(col) + str(lin)].border = Border(top=dotted, right=medium, left=dotted, bottom=dotted)
+            WS[get_column_letter(col) + '9'].border = Border(top=medium, right=medium, left=dotted, bottom=dotted)
+            WS[get_column_letter(col-1) + str(lin)].border = Border(top=dotted, right=dotted, left=dotted, bottom=dotted)
+            WS[get_column_letter(col-1) + '9'].border = Border(top=medium, right=dotted, left=dotted, bottom=dotted)
+
+    #qualidade
+    #manha
+    for lin in range(18, num_pessoas_qualidade + 18):
+        WS.row_dimensions[lin].height = 25
+        WS[get_column_letter(col) + str(lin)].alignment = Alignment(horizontal="center", vertical="center")
+        WS[get_column_letter(col) + str(lin)].font = Font(name="Calibri", size=18)
+        WS[get_column_letter(col) + str(lin)].border = Border(top=dotted, right=dotted, left=dotted, bottom=dotted)
+        if dia_semana_en == 'Sat':  # Sábado
+            WS[get_column_letter(col) + str(lin)] = 'D'
+            WS[get_column_letter(col) + str(lin)].fill = folga_fill
+        elif dia_semana_en == 'Sun':  # Domingo
+            WS[get_column_letter(col) + str(lin)] = 'D'
+            WS[get_column_letter(col) + str(lin)].fill = folga_fill
+        elif dia_semana_en == 'Mon' or 'Tue' or 'Wed' or 'Thu' or 'Fri' and lin <= 19:
+            if lin <= 19:
+                WS[get_column_letter(col) + str(lin)] = 'MQ'
+            elif lin == 20:
+                WS[get_column_letter(col) + str(lin)] = 'TQ'
+            elif lin == 21:
+                WS[get_column_letter(col) + str(lin)] = 'NQ'
+            elif lin == 22:
+                WS[get_column_letter(col) + str(lin)] = 'TQ'
+            elif lin == 23:
+                WS[get_column_letter(col) + str(lin)] = 'MQ'
+        
+        if col == 4:
+            WS[get_column_letter(col) + str(lin)].border = Border(top=dotted, right=dotted, left=medium, bottom=dotted)
+        elif col == 33:
+            WS[get_column_letter(col) + str(lin)].border = Border(top=dotted, right=medium, left=dotted, bottom=dotted)
+        elif col == 34:
+            WS[get_column_letter(col) + str(lin)].border = Border(top=dotted, right=medium, left=dotted, bottom=dotted)
+            WS[get_column_letter(col-1) + str(lin)].border = Border(top=dotted, right=dotted, left=dotted, bottom=dotted)
 
     WS.column_dimensions[get_column_letter(col)].width = 7
 
@@ -78,21 +219,35 @@ for col in range(4, num_dias + 4):
     WS[get_column_letter(col) + '4'].alignment = Alignment(horizontal="center", vertical="center")
     WS[get_column_letter(col) + '4'].border = Border(right=dotted, left=dotted, bottom=medium)
 
+    WS[get_column_letter(col) + '8'].fill = linhazul_fill
+    WS[get_column_letter(col) + '17'].fill = linhazul_fill
+
     if col == 4:
         WS[get_column_letter(col) + '3'].border = Border(top=dotted, right=dotted, left=medium, bottom=dotted)
         
         WS[get_column_letter(col) + '4'] = '1'
         WS[get_column_letter(col) + '4'].border = Border(right=dotted, left=medium, bottom=medium)
+
+        WS[get_column_letter(col) + '8'].border = Border(top=dotted, right=dotted, left=medium, bottom=thin)
+        WS[get_column_letter(col) + '17'].border = Border(top=dotted, right=dotted, left=medium, bottom=thin)
     elif col == 33:
         WS[get_column_letter(col) + '3'].border = Border(top=dotted, right=medium, left=dotted, bottom=dotted)
 
         WS[get_column_letter(col) + '4'].border = Border(right=medium, left=dotted, bottom=medium)
+
+        WS[get_column_letter(col) + '8'].border = Border(top=dotted, right=medium, left=dotted, bottom=thin)
+        WS[get_column_letter(col) + '17'].border = Border(top=dotted, right=medium, left=dotted, bottom=thin)
     elif col == 34:
         WS[get_column_letter(col) + '3'].border = Border(top=dotted, right=medium, left=dotted, bottom=dotted)
         WS[get_column_letter(col-1) + '3'].border = Border(top=dotted, right=dotted, left=dotted, bottom=dotted)
 
         WS[get_column_letter(col) + '4'].border = Border(right=medium, left=dotted, bottom=medium)
         WS[get_column_letter(col-1) + '4'].border = Border(right=dotted, left=dotted, bottom=medium)
+
+        WS[get_column_letter(col) + '8'].border = Border(top=dotted, right=medium, left=dotted, bottom=thin)
+        WS[get_column_letter(col) + '17'].border = Border(top=dotted, right=medium, left=dotted, bottom=thin)
+        WS[get_column_letter(col-1) + '8'].border = Border(top=dotted, right=dotted, left=dotted, bottom=thin)
+        WS[get_column_letter(col-1) + '17'].border = Border(top=dotted, right=dotted, left=dotted, bottom=thin)
 
     start_date = f"{ano}-{mes}-{int(current_date) + 1}"
 

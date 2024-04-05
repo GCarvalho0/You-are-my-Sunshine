@@ -12,6 +12,7 @@ import sys
 wb = load_workbook(r"C:\Users\Alunos\Downloads\yha.xlsx")
 WS = wb.active
 WS.column_dimensions['C'].width = 25
+#WS.row_dimensions[8].height = 20
 medium = Side(border_style="medium")
 dotted = Side(border_style="dotted")
 
@@ -26,29 +27,21 @@ dias_semana_pt = {
     'Sun': 'Dom'
 }
 
-# Carregar o workbook existente
-wb = load_workbook(r"C:\Users\Alunos\Downloads\yha2.xlsx")
-WS = wb.active
-WS.column_dimensions['C'].width = 25
-medium = Side(border_style="medium")
-dotted = Side(border_style="dotted")
-
+#Dias da semana e do mes
 # Definir cores para sábado e domingo
-saturday_fill = PatternFill("solid", fgColor="FFFF00")  # Amarelo
-sunday_fill = PatternFill("solid", fgColor="FF0000")    # Vermelho
+fimdesemana_fill = PatternFill("solid", fgColor="fffffccc")
 
 # Definir o mês e o ano
 ano = 2024
-mes = 5
+mes = 4
 
 # Obter o número de dias no mês
 num_dias = calendar.monthrange(ano, mes)[1]
 
-# Obter o nome do mês
-nome_mes = calendar.month_name[mes]
-
 # Definir datas iniciais
 start_date = f"{ano}-{mes}-01"
+
+num_pessoas_escritorio = 8
 
 # Percorrer os dias do mês
 for col in range(4, num_dias + 4):
@@ -59,24 +52,90 @@ for col in range(4, num_dias + 4):
     dia_semana_pt = dias_semana_pt[dia_semana_en]
     
     if dia_semana_en == 'Sat':  # Sábado
-        WS[get_column_letter(col) + '3'].fill = saturday_fill
-        WS[get_column_letter(col) + '4'].fill = saturday_fill
+        WS[get_column_letter(col) + '3'].fill = fimdesemana_fill
+        WS[get_column_letter(col) + '4'].fill = fimdesemana_fill
     elif dia_semana_en == 'Sun':  # Domingo
-        WS[get_column_letter(col) + '3'].fill = sunday_fill
-        WS[get_column_letter(col) + '4'].fill = sunday_fill
+        WS[get_column_letter(col) + '3'].fill = fimdesemana_fill
+        WS[get_column_letter(col) + '4'].fill = fimdesemana_fill
+
+    for lin in range(9, num_pessoas_escritorio + 9):
+        if dia_semana_en == 'Sat':  # Sábado
+            WS[get_column_letter(col) + str(lin)] = 'D'
+        elif dia_semana_en == 'Sun':  # Domingo
+            WS[get_column_letter(col) + str(lin)] = 'D'
+        elif dia_semana_en == 'Mon' or 'Tue' or 'Wed' or 'Thu' or 'Fri':
+            WS[get_column_letter(col) + str(lin)] = 'E'
+
+    WS.column_dimensions[get_column_letter(col)].width = 7
 
     WS[get_column_letter(col) + '3'] = dia_semana_pt
+    WS[get_column_letter(col) + '3'].font = Font(name="Calibri", b="true", size=18)
+    WS[get_column_letter(col) + '3'].alignment = Alignment(horizontal="center", vertical="center")
+    WS[get_column_letter(col) + '3'].border = Border(top=dotted, right=dotted, left=dotted, bottom=dotted)
+
     WS[get_column_letter(col) + '4'] = current_date
+    WS[get_column_letter(col) + '4'].font = Font(name="Calibri", b="true", size=18)
+    WS[get_column_letter(col) + '4'].alignment = Alignment(horizontal="center", vertical="center")
+    WS[get_column_letter(col) + '4'].border = Border(right=dotted, left=dotted, bottom=medium)
+
+    if col == 4:
+        WS[get_column_letter(col) + '3'].border = Border(top=dotted, right=dotted, left=medium, bottom=dotted)
+        
+        WS[get_column_letter(col) + '4'] = '1'
+        WS[get_column_letter(col) + '4'].border = Border(right=dotted, left=medium, bottom=medium)
+    elif col == 33:
+        WS[get_column_letter(col) + '3'].border = Border(top=dotted, right=medium, left=dotted, bottom=dotted)
+
+        WS[get_column_letter(col) + '4'].border = Border(right=medium, left=dotted, bottom=medium)
+    elif col == 34:
+        WS[get_column_letter(col) + '3'].border = Border(top=dotted, right=medium, left=dotted, bottom=dotted)
+        WS[get_column_letter(col-1) + '3'].border = Border(top=dotted, right=dotted, left=dotted, bottom=dotted)
+
+        WS[get_column_letter(col) + '4'].border = Border(right=medium, left=dotted, bottom=medium)
+        WS[get_column_letter(col-1) + '4'].border = Border(right=dotted, left=dotted, bottom=medium)
+
     start_date = f"{ano}-{mes}-{int(current_date) + 1}"
 
 #mês
-WS.merge_cells('D2:AG2')
+# Mapeamento dos meses em inglês para português de Portugal
+meses_pt = {
+    'January': 'Janeiro',
+    'February': 'Fevereiro',
+    'March': 'Março',
+    'April': 'Abril',
+    'May': 'Maio',
+    'June': 'Junho',
+    'July': 'Julho',
+    'August': 'Agosto',
+    'September': 'Setembro',
+    'October': 'Outubro',
+    'November': 'Novembro',
+    'December': 'Dezembro'
+}
+
+# Definir o nome do mês em inglês
+nome_mes_en = calendar.month_name[mes]
+
+# Traduzir para português de Portugal
+nome_mes_pt = meses_pt[nome_mes_en]
+
+if num_dias == 30:
+    WS.merge_cells('D2:AG2')
+
+if num_dias == 31:
+    WS.merge_cells('D2:AH2')
+# Obter a célula D2
 d2 = WS['D2']
-WS['D2'] = '=TEXT(A1,"mmmm")'
+# Atribuir o nome do mês em português de Portugal à célula D2
+WS['D2'] = nome_mes_pt.capitalize()  # Capitalize para a primeira letra em maiúscula
+# Ajustar alinhamento, fonte, preenchimento e borda da célula D2
 d2.alignment = Alignment(horizontal="center", vertical="center")
 d2.font = Font(name="Calibri", size=48, b="true")
 d2.fill = PatternFill("solid", fgColor="fffffccc")
 d2.border = Border(top=medium, left=medium, right=medium)
+
+for col in range(4, num_dias + 4):
+    WS[get_column_letter(col) + '2'].border = Border(top=medium, left=medium, right=medium)
 
 #total manha
 WS['C5'] = "Total Manhã"
@@ -265,11 +324,15 @@ WS['AG5'].font = Font(name="Calibri", b="true", size=18)
 WS['AG5'].alignment = Alignment(horizontal="center", vertical="center")
 WS['AG5'].border = Border(top=medium, bottom=medium, right=dotted, left=dotted)
 
-WS['AH5'] = '0'
-WS['AH5'].fill = PatternFill("solid", fgColor="a0fc9c")
-WS['AH5'].font = Font(name="Calibri", b="true", size=18)
-WS['AH5'].alignment = Alignment(horizontal="center", vertical="center")
-WS['AH5'].border = Border(top=medium, bottom=medium, right=medium, left=dotted)
+if num_dias == 30:
+    WS['AG5'].border = Border(top=medium, bottom=dotted, right=medium, left=dotted)
+
+if num_dias == 31:
+    WS['AH5'] = '0'
+    WS['AH5'].fill = PatternFill("solid", fgColor="a0fc9c")
+    WS['AH5'].font = Font(name="Calibri", b="true", size=18)
+    WS['AH5'].alignment = Alignment(horizontal="center", vertical="center")
+    WS['AH5'].border = Border(top=medium, bottom=medium, right=medium, left=dotted)
 
 #total tarde
 WS['C6'] = "Total Tarde"
@@ -458,18 +521,22 @@ WS['AG6'].font = Font(name="Calibri", b="true", size=18)
 WS['AG6'].alignment = Alignment(horizontal="center", vertical="center")
 WS['AG6'].border = Border(top=medium, bottom=medium, right=dotted, left=dotted)
 
-WS['AH6'] = '0'
-WS['AH6'].fill = PatternFill("solid", fgColor="08b454")
-WS['AH6'].font = Font(name="Calibri", b="true", size=18)
-WS['AH6'].alignment = Alignment(horizontal="center", vertical="center")
-WS['AH6'].border = Border(top=medium, bottom=medium, right=medium, left=dotted)
+if num_dias == 30:
+    WS['AG6'].border = Border(top=medium, bottom=dotted, right=medium, left=dotted)
+
+if num_dias == 31:
+    WS['AH6'] = '0'
+    WS['AH6'].fill = PatternFill("solid", fgColor="08b454")
+    WS['AH6'].font = Font(name="Calibri", b="true", size=18)
+    WS['AH6'].alignment = Alignment(horizontal="center", vertical="center")
+    WS['AH6'].border = Border(top=medium, bottom=medium, right=medium, left=dotted)
 
 #total noite
 WS['C7'] = "Total Noite"
 WS['C7'].fill = PatternFill("solid", fgColor="c8d49c")
 WS['C7'].font = Font(name="Calibri", b="true", size=18)
 WS['C7'].alignment = Alignment(horizontal="right", vertical="center")
-WS['C7'].border = Border(top=medium, right=medium, left=dotted, bottom=dotted)
+WS['C7'].border = Border(top=medium, right=medium, bottom=dotted)
 
 WS['D7'] = '0'
 WS['D7'].fill = PatternFill("solid", fgColor="c8d49c")
@@ -651,11 +718,18 @@ WS['AG7'].font = Font(name="Calibri", b="true", size=18)
 WS['AG7'].alignment = Alignment(horizontal="center", vertical="center")
 WS['AG7'].border = Border(top=medium, bottom=dotted, right=dotted, left=dotted)
 
-WS['AH7'] = '0'
-WS['AH7'].fill = PatternFill("solid", fgColor="c8d49c")
-WS['AH7'].font = Font(name="Calibri", b="true", size=18)
-WS['AH7'].alignment = Alignment(horizontal="center", vertical="center")
-WS['AH7'].border = Border(top=medium, bottom=dotted, right=medium, left=dotted)
+if num_dias == 30:
+    WS['AG7'].border = Border(top=medium, bottom=dotted, right=medium, left=dotted)
+
+if num_dias == 31:
+    WS['AH7'] = '0' 
+    WS['AH7'].fill = PatternFill("solid", fgColor="c8d49c")
+    WS['AH7'].font = Font(name="Calibri", b="true", size=18)
+    WS['AH7'].alignment = Alignment(horizontal="center", vertical="center")
+    WS['AH7'].border = Border(top=medium, bottom=dotted, right=medium, left=dotted)
+
+#escritorio
+
 
 wb.save(r"C:\Users\Alunos\Downloads\yha.xlsx")
 #wb.save(r"C:\Users\Urubu\OneDrive\Documentos\GitHub\You-are-my-Sunshine\yha.xlsx")
